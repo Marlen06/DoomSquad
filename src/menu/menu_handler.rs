@@ -27,6 +27,7 @@ const COL_TEXT_WHITE: u32 = 0xFFFFFF;
 /// Dictates the high-level routing in the `main.rs` loop.
 pub enum AppState {
     StartScreen,
+    KeyBinding,
     Playing,
     GameOver,
     GamePaused,
@@ -330,6 +331,18 @@ impl Menu {
         }
 
         AppState::GamePaused
+    }
+
+    pub fn update_and_draw_key_bindings(
+         &mut self,
+        window: &mut Window,
+        buffer: &mut [u32],
+        game: &mut Game,
+        renderer_data: &RendererData,
+        audio: &mut Audio,
+    ) -> AppState {
+        AppState::KeyBinding
+        
     }
 
     /// Fetches mouse coordinates and performs edge detection (debouncing) for left-clicks.
