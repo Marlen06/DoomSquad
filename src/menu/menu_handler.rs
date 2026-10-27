@@ -170,7 +170,7 @@ impl Menu {
         }
 
         if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked || click4 {
-            return AppState::StartScreen;
+            return AppState::KeyBinding;
         }
 
         // Keep looping in the menu until an action changes the state
@@ -232,7 +232,7 @@ impl Menu {
         }
 
         if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked {
-            return AppState::StartScreen;
+            return AppState::KeyBinding;
         }
 
         AppState::GameOver
@@ -326,8 +326,8 @@ impl Menu {
             return AppState::StartScreen;
         }
 
-        if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked {
-            return AppState::StartScreen;
+        if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked || click4 {
+            return AppState::KeyBinding;
         }
 
         AppState::GamePaused
@@ -341,6 +341,80 @@ impl Menu {
         renderer_data: &RendererData,
         audio: &mut Audio,
     ) -> AppState {
+        // Clear the buffer from the previous frame
+        buffer.fill(COL_BG_MAIN);
+
+        // Fetch user inputs   
+        let (mx, my, clicked) = self.get_mouse_state(window);
+
+
+
+        let action = [
+            "FORWARD",
+            "BACKWARD",
+            "SPRINT",
+            "CROUCH",
+            "INTERACT",
+            "CROSSHAIR_DOWN",
+            "CROSSHAIR_UP",
+            "TURN_RIGHT",
+            "TURN_LEFT",
+            "FIRE_BULLET",
+            "GODMODE",
+            "LEFT",
+            "RIGHT",
+            "JUMP",
+            "BIG_JUMP",
+            "FIRE",
+            "CURRENT_ENEMIES",
+            "TOGGLE_FINE_AIMING"
+        ];
+
+        for (i, action) in action.iter().enumerate() {
+            let button = ButtonDef{
+                x: 230,
+                y:160 + i * 60,
+                w: 340,
+                h: 50,
+                text: action.to_string(),
+            };
+            
+            if self.draw_flat_button(buffer,&button, mx, my) && clicked {
+                // ausgwählte Aktionen verarbeitet
+            }
+        }
+
+        // ich weiß noch nicht ob ich das bracuhe 
+       // let click1 = window.is_key_pressed(Key::Key1, KeyRepeat::No);
+        //let click2 = window.is_key_pressed(Key::Key2, KeyRepeat::No);
+       // let click3 = window.is_key_pressed(Key::Key3, KeyRepeat::No);
+        //let click4 = window.is_key_pressed(Key::Key4, KeyRepeat::No);
+
+        // Render titles
+        Self::draw_text_centered(
+            buffer,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+            "KEY BINDINGS",
+            50,
+            6,
+            COL_TITLE_RED,
+        );
+       // Define button layouts
+        let btn_forward = ButtonDef {
+            x: 230,
+            y: 160,
+            w: 340,
+            h: 50,
+            text: "FORWARD".to_string(),
+        };
+        
+
+        if self.draw_flat_button(buffer, &btn_backward, mx, my) && clicked {
+            let _ = std::fs::write("savegame.txt", game.map_index.to_string());
+            return AppState::StartScreen;
+        }
+
         AppState::KeyBinding
         
     }
