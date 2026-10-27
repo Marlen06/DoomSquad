@@ -12,8 +12,8 @@ use crate::audio::audio_handler::Audio;
 use crate::game::gamestate::Game;
 use crate::render::RendererData;
 
-const SCREEN_WIDTH: usize = 800;
-const SCREEN_HEIGHT: usize = 450;
+const SCREEN_WIDTH: usize = 900;
+const SCREEN_HEIGHT: usize = 550;
 
 const COL_BG_MAIN: u32 = 0x111111;
 const COL_BG_GAMEOVER: u32 = 0x330000;
@@ -73,6 +73,7 @@ impl Menu {
         let click1 = window.is_key_pressed(Key::Key1, KeyRepeat::No);
         let click2 = window.is_key_pressed(Key::Key2, KeyRepeat::No);
         let click3 = window.is_key_pressed(Key::Key3, KeyRepeat::No);
+        let click4 = window.is_key_pressed(Key::Key4, KeyRepeat::No);
 
         // Render titles
         Self::draw_text_centered(
@@ -131,6 +132,14 @@ impl Menu {
             text: "[ESC] QUIT GAME".to_string(),
         };
 
+        let btn_bindings: ButtonDef = ButtonDef { 
+            x: (230), 
+            y: (440), 
+            w: (340), 
+            h: (50), 
+            text: "[4] KEY BINDINGS".to_string (), 
+        };
+
         // Interaction processing
         if self.draw_flat_button(buffer, &btn_start, mx, my) && clicked || click1 {
             *game = Game::new_game(renderer_data).unwrap(); // ! this unwrap is intentionally accepted
@@ -157,6 +166,10 @@ impl Menu {
 
         if self.draw_flat_button(buffer, &btn_quit, mx, my) && clicked {
             return AppState::Quit;
+        }
+
+        if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked || click4 {
+            return AppState::StartScreen;
         }
 
         // Keep looping in the menu until an action changes the state
@@ -199,6 +212,13 @@ impl Menu {
             h: 60,
             text: "[ESC] MAIN MENU".to_string(),
         };
+        let btn_bindings: ButtonDef = ButtonDef { 
+            x: (230), 
+            y: (380), 
+            w: (340), 
+            h: (60), 
+            text: "KEY BINDINGS".to_string(), 
+        };
 
         if self.draw_flat_button(buffer, &btn_save, mx, my) && clicked || click1 {
             // Persist the current level index to disk so it can be loaded later
@@ -207,6 +227,10 @@ impl Menu {
         }
 
         if self.draw_flat_button(buffer, &btn_menu, mx, my) && clicked {
+            return AppState::StartScreen;
+        }
+
+        if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked {
             return AppState::StartScreen;
         }
 
@@ -228,6 +252,7 @@ impl Menu {
         let click1 = window.is_key_pressed(Key::Key1, KeyRepeat::No);
         let click2 = window.is_key_pressed(Key::Key2, KeyRepeat::No);
         let click3 = window.is_key_pressed(Key::Key3, KeyRepeat::No);
+        let click4: bool = window.is_key_pressed(Key::Key4, KeyRepeat::No);
 
         Self::draw_text_centered(
             buffer,
@@ -273,6 +298,13 @@ impl Menu {
             h: 50,
             text: "[ESC] MAIN MENU".to_string(),
         };
+        let btn_bindings: ButtonDef = ButtonDef { 
+            x: (230), 
+            y: (390), 
+            w: (340), 
+            h: (50), 
+            text: "KEY BINDINGS".to_string(), 
+        };
 
         if self.draw_flat_button(buffer, &btn_resume, mx, my) && clicked || click1 {
             // Simply return to the Playing state without touching the game object to resume seamlessly
@@ -290,6 +322,10 @@ impl Menu {
         }
 
         if self.draw_flat_button(buffer, &btn_menu, mx, my) && clicked {
+            return AppState::StartScreen;
+        }
+
+        if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked {
             return AppState::StartScreen;
         }
 
