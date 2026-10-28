@@ -19,6 +19,7 @@ use crate::{
     game::{map::Point, movement::Mover},
     render::RendererData,
 };
+use crate::game::key_bindings:: KeyBinding;
 use minifb::{Key, KeyRepeat, MouseButton, MouseMode, Window};
 use std::f64::consts::PI;
 
@@ -171,6 +172,7 @@ impl Player {
         map: &Map,
         renderer_data: &RendererData,
         audio: &mut Audio,
+        key_bindings: &KeyBinding,
     ) -> Vec<EntityEvent> {
         let mut events: Vec<EntityEvent> = Vec::new();
         //reseting keyinput idfk how to do it an other way
@@ -369,7 +371,7 @@ impl Player {
             audio.play_sfx("slide", 1.0);
             self.move_speed += 5.0;
             self.is_sliding = true;
-            self.save_input(window);
+            self.save_input(window, key_bindings);
         }
 
         //during slide speed decreases
@@ -442,7 +444,7 @@ impl Player {
                 self.rocketlauncher_cooldown = ROCKETLAUNCHER_COOLDOWN_TIME;
             }
 
-            self.save_input(window);
+            self.save_input(window, key_bindings);
         }
 
         //Rocketlauncher cooldwon
@@ -547,7 +549,7 @@ impl Player {
         events
     }
 
-    fn save_input(&mut self, window: &Window) {
+    fn save_input(&mut self, window: &Window, key_bindings: &KeyBinding) {
         if window.is_key_down(Key::D) {
             self.last_input = D;
         } else if window.is_key_down(Key::A) {
@@ -557,7 +559,7 @@ impl Player {
         } else if window.is_key_down(Key::W) {
             self.last_input = W;
         } else {
-            self.last_input = No
+            self.last_input = No;
         }
     }
 

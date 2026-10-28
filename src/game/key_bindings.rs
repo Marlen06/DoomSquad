@@ -1,5 +1,6 @@
 use minifb::Key;
 
+#[derive(Clone)]
 pub struct KeyBinding {
     pub forward: Key,
     pub backward: Key,
@@ -11,13 +12,13 @@ pub struct KeyBinding {
     pub turn_right: Key,
     pub turn_left: Key,
     pub fire_bullet: Key,
-    pub fire: Key,
+    pub fire_arrow: Key,
     pub godmode: Key,
     pub left: Key,
     pub right: Key,
     pub jump: Key,
     pub big_jump: Key,
-    pub current_eneyies: Key,
+    pub current_enemies: Key,
     pub toggle_fine_aiming: Key,
 
 }

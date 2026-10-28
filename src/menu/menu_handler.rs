@@ -354,6 +354,8 @@ impl Menu {
         let action = [
             "FORWARD",
             "BACKWARD",
+            "LEFT",
+            "RIGHT",
             "SPRINT",
             "CROUCH",
             "INTERACT",
@@ -363,8 +365,6 @@ impl Menu {
             "TURN_LEFT",
             "FIRE_BULLET",
             "GODMODE",
-            "LEFT",
-            "RIGHT",
             "JUMP",
             "BIG_JUMP",
             "CURRENT_ENEMIES",
