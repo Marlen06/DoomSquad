@@ -48,12 +48,14 @@ struct ButtonDef {
 /// we only need to manually track the mouse state for edge detection (clicks).
 pub struct Menu {
     was_mouse_down: bool,
+    selected_action: Option<usize>,
 }
 
 impl Menu {
     pub fn new() -> Self {
         Self {
             was_mouse_down: false,
+            selected_action: None,
         }
     }
 
@@ -365,9 +367,9 @@ impl Menu {
             "RIGHT",
             "JUMP",
             "BIG_JUMP",
-            "FIRE",
             "CURRENT_ENEMIES",
-            "TOGGLE_FINE_AIMING"
+            "FIRE_ARROW",
+            "TOGGLE_FINE_AIMING",
         ];
 
         for (i, action) in action.iter().enumerate() {
@@ -383,7 +385,7 @@ impl Menu {
             };
             
             if self.draw_flat_button(buffer,&button, mx, my) && clicked {
-                // hier kommen bestimmte Aktionen welche verarbeitet werden
+                self.selected_action = Some(i)
             }
         }
 
