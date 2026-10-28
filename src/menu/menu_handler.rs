@@ -389,12 +389,7 @@ impl Menu {
             }
         }
 
-        // ich weiß noch nicht ob ich das bracuhe 
-       // let click1 = window.is_key_pressed(Key::Key1, KeyRepeat::No);
-        //let click2 = window.is_key_pressed(Key::Key2, KeyRepeat::No);
-       // let click3 = window.is_key_pressed(Key::Key3, KeyRepeat::No);
-        //let click4 = window.is_key_pressed(Key::Key4, KeyRepeat::No);
-
+        
         // Render titles
         Self::draw_text_centered(
             buffer,

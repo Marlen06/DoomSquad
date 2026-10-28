@@ -47,3 +47,19 @@ impl KeyBinding{
         }
     }
 }
+
+
+
+
+
+
+
+
+/*später noch hinzufügen und checken + löschen 
+if window.is_key_pressed(key_bindings.aim_mode, KeyRepeat::No) {
+    match self.aim_mode {
+        true => self.aim_mode = false,
+        false => self.aim_mode = true,
+    }
+}
+    */
