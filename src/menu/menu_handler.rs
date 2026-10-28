@@ -13,7 +13,7 @@ use crate::game::gamestate::Game;
 use crate::render::RendererData;
 
 const SCREEN_WIDTH: usize = 900;
-const SCREEN_HEIGHT: usize = 550;
+const SCREEN_HEIGHT: usize = 750;
 
 const COL_BG_MAIN: u32 = 0x111111;
 const COL_BG_GAMEOVER: u32 = 0x330000;
@@ -371,16 +371,19 @@ impl Menu {
         ];
 
         for (i, action) in action.iter().enumerate() {
+            let column = i % 2;
+            let row = i / 2;
+            
             let button = ButtonDef{
-                x: 230,
-                y:160 + i * 60,
+                x: 100 + column *250,
+                y: 160 + row * 60,
                 w: 340,
                 h: 50,
                 text: action.to_string(),
             };
             
             if self.draw_flat_button(buffer,&button, mx, my) && clicked {
-                // ausgwählte Aktionen verarbeitet
+                // hier kommen bestimmte Aktionen welche verarbeitet werden
             }
         }
 
@@ -400,21 +403,6 @@ impl Menu {
             6,
             COL_TITLE_RED,
         );
-       // Define button layouts
-        let btn_forward = ButtonDef {
-            x: 230,
-            y: 160,
-            w: 340,
-            h: 50,
-            text: "FORWARD".to_string(),
-        };
-        
-
-        if self.draw_flat_button(buffer, &btn_backward, mx, my) && clicked {
-            let _ = std::fs::write("savegame.txt", game.map_index.to_string());
-            return AppState::StartScreen;
-        }
-
         AppState::KeyBinding
         
     }
