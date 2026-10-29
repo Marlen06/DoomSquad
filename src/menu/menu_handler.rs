@@ -387,6 +387,38 @@ impl Menu {
             if self.draw_flat_button(buffer,&button, mx, my) && clicked {
                 self.selected_action = Some(i)
             }
+
+            if let Some(i) = self.selected_action{
+                let keys = window.get_keys_pressed(KeyRepeat::No);
+
+                  if let Some(key) = keys.first() {
+                    match i {
+                        0 => game.key_bindings.forward = *key,
+                        1 => game.key_bindings.backward = *key,
+                        2 => game.key_bindings.left = *key,
+                        3 => game.key_bindings.right = *key,
+                        4 => game.key_bindings.sprint = *key,
+                        5 => game.key_bindings.crouch = *key,
+                        6 => game.key_bindings.interact = *key,
+                        7 => game.key_bindings.crosshair_down = *key,
+                        8 => game.key_bindings.corsshair_up = *key,
+                        9 => game.key_bindings.turn_right = *key,
+                        10 => game.key_bindings.turn_left = *key,
+                        11 => game.key_bindings.fire_bullet = *key,
+                        12 => game.key_bindings.godmode = *key,
+                        13 => game.key_bindings.jump = *key,
+                        14 => game.key_bindings.big_jump = *key,
+                        15 => game.key_bindings.current_enemies = *key,
+                        16 => game.key_bindings.fire_arrow = *key,
+                        17 => game.key_bindings.toggle_fine_aiming = *key,
+                        _ => {}
+                    }
+
+                    println!("Neue Taste: {:?}", game.key_bindings.forward);
+
+                    self.selected_action = None;
+                }  
+            } 
         }
 
         
