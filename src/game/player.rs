@@ -14,12 +14,12 @@ use crate::{
     },
 };
 
+use crate::game::key_bindings::KeyBinding;
 use crate::{
     SCREEN_WIDTH,
     game::{map::Point, movement::Mover},
     render::RendererData,
 };
-use crate::game::key_bindings:: KeyBinding;
 use minifb::{Key, KeyRepeat, MouseButton, MouseMode, Window};
 use std::f64::consts::PI;
 
@@ -432,7 +432,9 @@ impl Player {
             }
 
             //rocketlauncher
-            if window.is_key_pressed(key_bindings.big_jump, KeyRepeat::No) && (self.rocketlauncher_cooldown == 0) {
+            if window.is_key_pressed(key_bindings.big_jump, KeyRepeat::No)
+                && (self.rocketlauncher_cooldown == 0)
+            {
                 audio.play_sfx("rocketlauncher", 1.0);
 
                 self.using_rocketlauncher = true;

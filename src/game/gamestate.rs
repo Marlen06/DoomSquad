@@ -21,7 +21,7 @@ use crate::parser::interactables_parser::*;
 use crate::parser::player_parser::parse_player_position;
 use minifb::Window;
 
-use crate::game::key_bindings:: KeyBinding;
+use crate::game::key_bindings::KeyBinding;
 
 const DESPAWN_TIME: i32 = 300;
 const MAP_GRID_CELL_SIZE: f64 = 64.0;
@@ -99,13 +99,22 @@ impl Game {
 
         let mut entity_spawns = Vec::new();
         //update player
-        let event = self.player.update(window, &self.map, renderer_data, audio, &self.key_bindings,);
+        let event = self
+            .player
+            .update(window, &self.map, renderer_data, audio, &self.key_bindings);
         //add possible spawn events
         entity_spawns.extend(event);
 
         //update all entites and add possible spawn events
         for entity in &mut self.entities {
-            let event = entity.update(window, &self.map, &self.player.mover, renderer_data, audio, &self.key_bindings,);
+            let event = entity.update(
+                window,
+                &self.map,
+                &self.player.mover,
+                renderer_data,
+                audio,
+                &self.key_bindings,
+            );
             entity_spawns.extend(event);
         }
 

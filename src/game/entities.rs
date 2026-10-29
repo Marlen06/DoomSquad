@@ -9,7 +9,7 @@ use crate::game::entity_behaviour::{
     summoner_enemy_behaviour, weak_enemy_behaviour,
 };
 
-use crate::game::key_bindings:: KeyBinding;
+use crate::game::key_bindings::KeyBinding;
 use crate::game::map::{Map, Point};
 use crate::game::movement::Mover;
 use crate::render::RendererData;

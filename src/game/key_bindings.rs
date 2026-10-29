@@ -1,4 +1,30 @@
 use minifb::Key;
+use serde:: {Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+struct KeyBindingsConfig {
+    forward: String,
+    backward: String,
+    sprint: String,
+    crouch: String,
+    interact: String,
+    crosshair_down: String,
+    corsshair_up: String,
+    turn_right: String,
+    turn_left: String,
+    fire_bullet: String,
+    fire_arrow: String,
+    godmode: String,
+    left: String,
+    right: String,
+    jump: String,
+    big_jump: String,
+    current_enemies: String,
+    toggle_fine_aiming: String,
+}
+
+
+
 
 #[derive(Clone)]
 pub struct KeyBinding {
@@ -20,14 +46,13 @@ pub struct KeyBinding {
     pub big_jump: Key,
     pub current_enemies: Key,
     pub toggle_fine_aiming: Key,
-
 }
 
-impl KeyBinding{
-    pub fn new() -> Self{
-        Self{
-            forward: Key:: W,
-            backward: Key:: S,
+impl KeyBinding {
+    pub fn new() -> Self {
+        Self {
+            forward: Key::W,
+            backward: Key::S,
             sprint: Key::LeftShift,
             crouch: Key::C,
             interact: Key::F,
@@ -39,7 +64,7 @@ impl KeyBinding{
             godmode: Key::G,
             left: Key::A,
             right: Key::D,
-            jump: Key:: Space,
+            jump: Key::Space,
             big_jump: Key::R,
             current_enemies: Key::L,
             fire_arrow: Key::RightShift,
@@ -48,14 +73,7 @@ impl KeyBinding{
     }
 }
 
-
-
-
-
-
-
-
-/*später noch hinzufügen und checken + löschen 
+/*später noch hinzufügen und checken + löschen
 if window.is_key_pressed(key_bindings.aim_mode, KeyRepeat::No) {
     match self.aim_mode {
         true => self.aim_mode = false,

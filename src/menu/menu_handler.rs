@@ -135,12 +135,12 @@ impl Menu {
             text: "[ESC] QUIT GAME".to_string(),
         };
 
-        let btn_bindings: ButtonDef = ButtonDef { 
-            x: (230), 
-            y: (440), 
-            w: (340), 
-            h: (50), 
-            text: "[4] KEY BINDINGS".to_string (), 
+        let btn_bindings: ButtonDef = ButtonDef {
+            x: (230),
+            y: (440),
+            w: (340),
+            h: (50),
+            text: "[4] KEY BINDINGS".to_string(),
         };
 
         // Interaction processing
@@ -215,12 +215,12 @@ impl Menu {
             h: 60,
             text: "[ESC] MAIN MENU".to_string(),
         };
-        let btn_bindings: ButtonDef = ButtonDef { 
-            x: (230), 
-            y: (380), 
-            w: (340), 
-            h: (60), 
-            text: "KEY BINDINGS".to_string(), 
+        let btn_bindings: ButtonDef = ButtonDef {
+            x: (230),
+            y: (380),
+            w: (340),
+            h: (60),
+            text: "KEY BINDINGS".to_string(),
         };
 
         if self.draw_flat_button(buffer, &btn_save, mx, my) && clicked || click1 {
@@ -301,12 +301,12 @@ impl Menu {
             h: 50,
             text: "[ESC] MAIN MENU".to_string(),
         };
-        let btn_bindings: ButtonDef = ButtonDef { 
-            x: (230), 
-            y: (390), 
-            w: (340), 
-            h: (50), 
-            text: "KEY BINDINGS".to_string(), 
+        let btn_bindings: ButtonDef = ButtonDef {
+            x: (230),
+            y: (390),
+            w: (340),
+            h: (50),
+            text: "KEY BINDINGS".to_string(),
         };
 
         if self.draw_flat_button(buffer, &btn_resume, mx, my) && clicked || click1 {
@@ -336,7 +336,7 @@ impl Menu {
     }
 
     pub fn update_and_draw_key_bindings(
-         &mut self,
+        &mut self,
         window: &mut Window,
         buffer: &mut [u32],
         game: &mut Game,
@@ -346,10 +346,31 @@ impl Menu {
         // Clear the buffer from the previous frame
         buffer.fill(COL_BG_MAIN);
 
-        // Fetch user inputs   
+        // Fetch user inputs
         let (mx, my, clicked) = self.get_mouse_state(window);
 
+        // Render titles
+        Self::draw_text_centered(
+            buffer,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+            "KEY BINDINGS",
+            50,
+            6,
+            COL_TITLE_RED,
+        );
 
+        let btn_start: ButtonDef = ButtonDef {
+            x: (630),
+            y: (90),
+            w: (205),
+            h: (50),
+            text: "START GAME".to_string(),
+        };
+
+        if self.draw_flat_button(buffer, &btn_start, mx, my) && clicked {
+            return AppState::Playing;
+        }
 
         let action = [
             "FORWARD",
@@ -375,23 +396,23 @@ impl Menu {
         for (i, action) in action.iter().enumerate() {
             let column = i % 2;
             let row = i / 2;
-            
-            let button = ButtonDef{
-                x: 100 + column *250,
+
+            let button = ButtonDef {
+                x: 100 + column * 250,
                 y: 160 + row * 60,
                 w: 340,
                 h: 50,
                 text: action.to_string(),
             };
-            
-            if self.draw_flat_button(buffer,&button, mx, my) && clicked {
+
+            if self.draw_flat_button(buffer, &button, mx, my) && clicked {
                 self.selected_action = Some(i)
             }
 
-            if let Some(i) = self.selected_action{
+            if let Some(i) = self.selected_action {
                 let keys = window.get_keys_pressed(KeyRepeat::No);
 
-                  if let Some(key) = keys.first() {
+                if let Some(key) = keys.first() {
                     match i {
                         0 => game.key_bindings.forward = *key,
                         1 => game.key_bindings.backward = *key,
@@ -417,23 +438,11 @@ impl Menu {
                     println!("Neue Taste: {:?}", game.key_bindings.forward);
 
                     self.selected_action = None;
-                }  
-            } 
+                }
+            }
         }
 
-        
-        // Render titles
-        Self::draw_text_centered(
-            buffer,
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT,
-            "KEY BINDINGS",
-            50,
-            6,
-            COL_TITLE_RED,
-        );
         AppState::KeyBinding
-        
     }
 
     /// Fetches mouse coordinates and performs edge detection (debouncing) for left-clicks.
