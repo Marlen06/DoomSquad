@@ -1,3 +1,4 @@
+
 use minifb::Key;
 use serde:: {Deserialize, Serialize};
 
@@ -90,6 +91,42 @@ impl KeyBinding {
             }
             Err(_) => Self::new()
         }
+    }
+
+    pub fn save(&self) {
+        let config = KeyBindingsConfig{
+            forward: key_to_string(self.forward),
+            backward: key_to_string(self.backward),
+            sprint: key_to_string(self.sprint),
+            crouch: key_to_string(self.crouch),
+            interact: key_to_string(self.interact),
+            crosshair_down: key_to_string(self.crosshair_down),
+            corsshair_up: key_to_string(self.corsshair_up),
+            turn_right: key_to_string(self.turn_right),
+            turn_left: key_to_string(self.turn_left),
+            fire_bullet: key_to_string(self.fire_bullet),
+            godmode: key_to_string(self.godmode),
+            left: key_to_string(self.left),
+            right: key_to_string(self.right),
+            jump: key_to_string(self.jump),
+            big_jump: key_to_string(self.big_jump),
+            current_enemies: key_to_string(self.current_enemies),
+            fire_arrow: key_to_string(self.fire_arrow),
+            toggle_fine_aiming: key_to_string(self.toggle_fine_aiming),
+        };
+
+        match ron:: ser::to_string_pretty(&config, ron::ser::PrettyConfig::default()) {
+            Ok(contents) => {
+                if let Err(error) = std::fs::write("key_bindings.ron", contents) {
+                    eprintln!("Fehler bei Speichern der Tasten: {}", error);
+                    
+                }
+            }
+            Err(error) => {
+                eprintln!("Fehler beim Erstellen der RON-Konfiguration: {}", error)
+            }
+        }
+        
     }
 }
 

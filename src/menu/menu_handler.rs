@@ -435,8 +435,8 @@ impl Menu {
                         _ => {}
                     }
 
-                    println!("Neue Taste: {:?}", game.key_bindings.forward);
-
+                    game.key_bindings.save();
+                    
                     self.selected_action = None;
                 }
             }

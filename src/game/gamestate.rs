@@ -71,7 +71,7 @@ impl Game {
                 entities: parse_entities(path.to_string(), renderer_data).ok()?,
                 interactables: parse_interactables(path.to_string(), renderer_data).ok()?,
                 map: parse_map(path.to_string()).ok()?, // TODO remove unwrap
-                key_bindings: KeyBinding::new(),
+                key_bindings: KeyBinding::load(),
                 despawn_timer: DESPAWN_TIME,
                 map_grid: MapGrid::new(MAP_GRID_CELL_SIZE),
                 projectile_that_hit: Vec::new(),
