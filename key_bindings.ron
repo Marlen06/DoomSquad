@@ -1,5 +1,5 @@
 (
-     forward:"W,
+    forward:"W,
     backward: "S",
     sprint: "LeftShift",
     crouch: "C",

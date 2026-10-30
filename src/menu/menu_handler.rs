@@ -83,7 +83,7 @@ impl Menu {
             buffer,
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
-            "DOOMSQUAD",
+            "SQUAD",
             50,
             6,
             COL_TITLE_RED,
