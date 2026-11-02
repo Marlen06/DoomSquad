@@ -3,7 +3,10 @@ use minifb::Key;
 use serde:: {Deserialize, Serialize};
 
 
-#[derive(Serialize, Deserialize)]
+
+
+
+#[derive(Clone, Serialize, Deserialize)]
 struct KeyBindingsConfig {
     forward: String,
     backward: String,
@@ -93,7 +96,7 @@ impl KeyBinding {
         }
     }
 
-    pub fn save(&self) {
+    pub fn save(&self) { 
         let config = KeyBindingsConfig{
             forward: key_to_string(self.forward),
             backward: key_to_string(self.backward),
@@ -113,7 +116,7 @@ impl KeyBinding {
             big_jump: key_to_string(self.big_jump),
             current_enemies: key_to_string(self.current_enemies),
             toggle_fine_aiming: key_to_string(self.toggle_fine_aiming),
-        };
+        }; 
 
         match ron:: ser::to_string_pretty(&config, ron::ser::PrettyConfig::default()) {
             Ok(contents) => {
@@ -176,6 +179,23 @@ fn string_to_key(key: &str) -> Option<Key> {
         "Key8" => Some(Key::Key8),
         "Key9" => Some(Key::Key9),
 
+        // Funktionstasten
+        "F1" => Some(Key::F1),
+        "F2" => Some(Key::F2),
+        "F3" => Some(Key::F3),
+        "F4" => Some(Key::F4),
+        "F5" => Some(Key::F5),
+        "F6" => Some(Key::F6),
+        "F7" => Some(Key::F7),
+        "F8" => Some(Key::F8),
+        "F9" => Some(Key::F9),
+        "F10" => Some(Key::F10),
+        "F11" => Some(Key::F11),
+        "F12" => Some(Key::F12),
+        "F13" => Some(Key::F13),
+        "F14" => Some(Key::F14),
+        "F15" => Some(Key::F15),
+
         // Pfeiltasten
         "Up" => Some(Key::Up),
         "Down" => Some(Key::Down),
@@ -187,9 +207,58 @@ fn string_to_key(key: &str) -> Option<Key> {
         "RightShift" => Some(Key::RightShift),
         "LeftCtrl" => Some(Key::LeftCtrl),
         "RightCtrl" => Some(Key::RightCtrl),
+        "LeftAlt" => Some(Key::LeftAlt),
+        "RightAlt" => Some(Key::RightAlt),
+        "LeftSuper" => Some(Key::LeftSuper),
+        "RightSuper" => Some(Key::RightSuper),
 
+         // Sonderzeichen
+        "Apostrophe" => Some(Key::Apostrophe),
+        "Backquote" => Some(Key::Backquote),
+        "Backslash" => Some(Key::Backslash),
+        "Comma" => Some(Key::Comma),
+        "Equal" => Some(Key::Equal),
+        "LeftBracket" => Some(Key::LeftBracket),
+        "Minus" => Some(Key::Minus),
+        "Period" => Some(Key::Period),
+        "RightBracket" => Some(Key::RightBracket),
+        "Semicolon" => Some(Key::Semicolon),
+        "Slash" => Some(Key::Slash),
+
+        "Backspace" => Some(Key::Backspace),
+        "Delete" => Some(Key::Delete),
+        "End" => Some(Key::End),
+        "Enter" => Some(Key::Enter),
+        "Home" => Some(Key::Home),
+        "Insert" => Some(Key::Insert),
+        "Menu" => Some(Key::Menu),
+        "PageDown" => Some(Key::PageDown),
+        "PageUp" => Some(Key::PageUp),
+        "Pause" => Some(Key::Pause),
         "Space" => Some(Key::Space),
+        "Tab" => Some(Key::Tab),
+
+         // Nummernblock
+        "NumPad0" => Some(Key::NumPad0),
+        "NumPad1" => Some(Key::NumPad1),
+        "NumPad2" => Some(Key::NumPad2),
+        "NumPad3" => Some(Key::NumPad3),
+        "NumPad4" => Some(Key::NumPad4),
+        "NumPad5" => Some(Key::NumPad5),
+        "NumPad6" => Some(Key::NumPad6),
+        "NumPad7" => Some(Key::NumPad7),
+        "NumPad8" => Some(Key::NumPad8),
+        "NumPad9" => Some(Key::NumPad9),
+        "NumPadDot" => Some(Key::NumPadDot),
+        "NumPadSlash" => Some(Key::NumPadSlash),
+        "NumPadAsterisk" => Some(Key::NumPadAsterisk),
+        "NumPadMinus" => Some(Key::NumPadMinus),
+        "NumPadPlus" => Some(Key::NumPadPlus),
+        "NumPadEnter" => Some(Key::NumPadEnter),
+
+
         _ => None,
+
     }
     
 }
@@ -207,7 +276,7 @@ impl KeyBindingsConfig {
             turn_right: string_to_key(&self.turn_right)?,
             turn_left: string_to_key(&self.turn_left)?,
             fire_bullet: string_to_key(&self.fire_bullet)?,
-             fire_arrow: string_to_key(&self.fire_arrow)?,
+            fire_arrow: string_to_key(&self.fire_arrow)?,
             godmode: string_to_key(&self.godmode)?,
             left: string_to_key(&self.left)?,
             right: string_to_key(&self.right)?,
