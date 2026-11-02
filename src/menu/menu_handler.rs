@@ -385,11 +385,11 @@ impl Menu {
             "TURN_RIGHT",
             "TURN_LEFT",
             "FIRE_BULLET",
+            "FIRE_ARROW",
             "GODMODE",
             "JUMP",
             "BIG_JUMP",
             "CURRENT_ENEMIES",
-            "FIRE_ARROW",
             "TOGGLE_FINE_AIMING",
         ];
 
@@ -426,17 +426,17 @@ impl Menu {
                         9 => game.key_bindings.turn_right = *key,
                         10 => game.key_bindings.turn_left = *key,
                         11 => game.key_bindings.fire_bullet = *key,
-                        12 => game.key_bindings.godmode = *key,
-                        13 => game.key_bindings.jump = *key,
-                        14 => game.key_bindings.big_jump = *key,
-                        15 => game.key_bindings.current_enemies = *key,
-                        16 => game.key_bindings.fire_arrow = *key,
+                        12 => game.key_bindings.fire_arrow = *key,
+                        13 => game.key_bindings.godmode = *key,
+                        14 => game.key_bindings.jump = *key,
+                        15 => game.key_bindings.big_jump = *key,
+                        16 => game.key_bindings.current_enemies = *key,
                         17 => game.key_bindings.toggle_fine_aiming = *key,
                         _ => {}
                     }
 
                     game.key_bindings.save();
-                    
+
                     self.selected_action = None;
                 }
             }

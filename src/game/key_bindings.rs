@@ -63,13 +63,13 @@ impl KeyBinding {
             turn_right: Key::Right,
             turn_left: Key::Left,
             fire_bullet: Key::RightCtrl,
+            fire_arrow: Key::RightShift,
             godmode: Key::G,
             left: Key::A,
             right: Key::D,
             jump: Key::Space,
             big_jump: Key::R,
             current_enemies: Key::L,
-            fire_arrow: Key::RightShift,
             toggle_fine_aiming: Key::E,
         }
     }
@@ -105,13 +105,13 @@ impl KeyBinding {
             turn_right: key_to_string(self.turn_right),
             turn_left: key_to_string(self.turn_left),
             fire_bullet: key_to_string(self.fire_bullet),
+            fire_arrow: key_to_string(self.fire_arrow),
             godmode: key_to_string(self.godmode),
             left: key_to_string(self.left),
             right: key_to_string(self.right),
             jump: key_to_string(self.jump),
             big_jump: key_to_string(self.big_jump),
             current_enemies: key_to_string(self.current_enemies),
-            fire_arrow: key_to_string(self.fire_arrow),
             toggle_fine_aiming: key_to_string(self.toggle_fine_aiming),
         };
 
@@ -136,24 +136,59 @@ fn key_to_string(key:Key) -> String {
 
 fn string_to_key(key: &str) -> Option<Key> {
     match key {
-        "W" => Some(Key::W),
-        "S" => Some(Key::S),
-        "LeftShift" => Some(Key::LeftShift),
-        "C" => Some(Key::C),
-        "F" => Some(Key::F),
-        "Down" => Some(Key::Down),
-        "Up" => Some(Key::Up),
-        "Right" => Some(Key::Right),
-        "Left" => Some(Key::Left),
-        "RightCtrl" => Some(Key::RightCtrl),
-        "G" => Some(Key::G),
+        // Buchstaben
         "A" => Some(Key::A),
+        "B" => Some(Key::B),
+        "C" => Some(Key::C),
         "D" => Some(Key::D),
-        "Space" => Some(Key::Space),
-        "R" => Some(Key::R),
-        "L" => Some(Key::L),
-        "RightShift" => Some(Key::RightShift),
         "E" => Some(Key::E),
+        "F" => Some(Key::F),
+        "G" => Some(Key::G),
+        "H" => Some(Key::H),
+        "I" => Some(Key::I),
+        "J" => Some(Key::J),
+        "K" => Some(Key::K),
+        "L" => Some(Key::L),
+        "M" => Some(Key::M),
+        "N" => Some(Key::N),
+        "O" => Some(Key::O),
+        "P" => Some(Key::P),
+        "Q" => Some(Key::Q),
+        "R" => Some(Key::R),
+        "S" => Some(Key::S),
+        "T" => Some(Key::T),
+        "U" => Some(Key::U),
+        "V" => Some(Key::V),
+        "W" => Some(Key::W),
+        "X" => Some(Key::X),
+        "Y" => Some(Key::Y),
+        "Z" => Some(Key::Z),
+
+        // Zahlenreihe
+        "Key0" => Some(Key::Key0),
+        "Key1" => Some(Key::Key1),
+        "Key2" => Some(Key::Key2),
+        "Key3" => Some(Key::Key3),
+        "Key4" => Some(Key::Key4),
+        "Key5" => Some(Key::Key5),
+        "Key6" => Some(Key::Key6),
+        "Key7" => Some(Key::Key7),
+        "Key8" => Some(Key::Key8),
+        "Key9" => Some(Key::Key9),
+
+        // Pfeiltasten
+        "Up" => Some(Key::Up),
+        "Down" => Some(Key::Down),
+        "Left" => Some(Key::Left),
+        "Right" => Some(Key::Right),
+
+          // Modifier-Tasten
+        "LeftShift" => Some(Key::LeftShift),
+        "RightShift" => Some(Key::RightShift),
+        "LeftCtrl" => Some(Key::LeftCtrl),
+        "RightCtrl" => Some(Key::RightCtrl),
+
+        "Space" => Some(Key::Space),
         _ => None,
     }
     
@@ -172,13 +207,13 @@ impl KeyBindingsConfig {
             turn_right: string_to_key(&self.turn_right)?,
             turn_left: string_to_key(&self.turn_left)?,
             fire_bullet: string_to_key(&self.fire_bullet)?,
+             fire_arrow: string_to_key(&self.fire_arrow)?,
             godmode: string_to_key(&self.godmode)?,
             left: string_to_key(&self.left)?,
             right: string_to_key(&self.right)?,
             jump: string_to_key(&self.jump)?,
             big_jump: string_to_key(&self.big_jump)?,
             current_enemies: string_to_key(&self.current_enemies)?,
-            fire_arrow: string_to_key(&self.fire_arrow)?,
             toggle_fine_aiming: string_to_key(&self.toggle_fine_aiming)?,
 
         } )
@@ -186,11 +221,3 @@ impl KeyBindingsConfig {
     }
     
 }
-/*später noch hinzufügen und checken + löschen
-if window.is_key_pressed(key_bindings.aim_mode, KeyRepeat::No) {
-    match self.aim_mode {
-        true => self.aim_mode = false,
-        false => self.aim_mode = true,
-    }
-}
-    */
