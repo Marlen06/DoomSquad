@@ -215,13 +215,7 @@ impl Menu {
             h: 60,
             text: "[ESC] MAIN MENU".to_string(),
         };
-        let btn_bindings: ButtonDef = ButtonDef {
-            x: (230),
-            y: (380),
-            w: (340),
-            h: (60),
-            text: "KEY BINDINGS".to_string(),
-        };
+       
 
         if self.draw_flat_button(buffer, &btn_save, mx, my) && clicked || click1 {
             // Persist the current level index to disk so it can be loaded later
@@ -233,9 +227,7 @@ impl Menu {
             return AppState::StartScreen;
         }
 
-        if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked {
-            return AppState::KeyBinding;
-        }
+        
 
         AppState::GameOver
     }
@@ -255,7 +247,6 @@ impl Menu {
         let click1 = window.is_key_pressed(Key::Key1, KeyRepeat::No);
         let click2 = window.is_key_pressed(Key::Key2, KeyRepeat::No);
         let click3 = window.is_key_pressed(Key::Key3, KeyRepeat::No);
-        let click4: bool = window.is_key_pressed(Key::Key4, KeyRepeat::No);
 
         Self::draw_text_centered(
             buffer,
@@ -301,13 +292,8 @@ impl Menu {
             h: 50,
             text: "[ESC] MAIN MENU".to_string(),
         };
-        let btn_bindings: ButtonDef = ButtonDef {
-            x: (230),
-            y: (390),
-            w: (340),
-            h: (50),
-            text: "KEY BINDINGS".to_string(),
-        };
+        
+        
 
         if self.draw_flat_button(buffer, &btn_resume, mx, my) && clicked || click1 {
             // Simply return to the Playing state without touching the game object to resume seamlessly
@@ -326,10 +312,6 @@ impl Menu {
 
         if self.draw_flat_button(buffer, &btn_menu, mx, my) && clicked {
             return AppState::StartScreen;
-        }
-
-        if self.draw_flat_button(buffer, &btn_bindings, mx, my) && clicked || click4 {
-            return AppState::KeyBinding;
         }
 
         AppState::GamePaused
@@ -360,17 +342,7 @@ impl Menu {
             COL_TITLE_RED,
         );
 
-        let btn_start: ButtonDef = ButtonDef {
-            x: (630),
-            y: (90),
-            w: (205),
-            h: (50),
-            text: "START GAME".to_string(),
-        };
-
-        if self.draw_flat_button(buffer, &btn_start, mx, my) && clicked {
-            return AppState::Playing;
-        }
+        
 
         let action = [
             "FORWARD",
@@ -392,6 +364,9 @@ impl Menu {
             "CURRENT_ENEMIES",
             "TOGGLE_FINE_AIMING",
         ];
+            
+
+        
 
         for (i, action) in action.iter().enumerate() {
             let column = i % 2;
