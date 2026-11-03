@@ -17,4 +17,5 @@
     big_jump: "R",
     current_enemies: "L",
     toggle_fine_aiming: "E",
+    escape: "Escape",
 )

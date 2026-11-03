@@ -6,10 +6,12 @@
 
 use font8x8::{BASIC_FONTS, UnicodeFonts};
 use minifb::{Key, KeyRepeat, MouseButton, MouseMode, Window};
+use rand::seq::index;
 use std::fs;
 
 use crate::audio::audio_handler::Audio;
 use crate::game::gamestate::Game;
+use crate::game::key_bindings::KeyBinding;
 use crate::render::RendererData;
 
 const SCREEN_WIDTH: usize = 900;
@@ -215,7 +217,6 @@ impl Menu {
             h: 60,
             text: "[ESC] MAIN MENU".to_string(),
         };
-       
 
         if self.draw_flat_button(buffer, &btn_save, mx, my) && clicked || click1 {
             // Persist the current level index to disk so it can be loaded later
@@ -226,8 +227,6 @@ impl Menu {
         if self.draw_flat_button(buffer, &btn_menu, mx, my) && clicked {
             return AppState::StartScreen;
         }
-
-        
 
         AppState::GameOver
     }
@@ -292,8 +291,6 @@ impl Menu {
             h: 50,
             text: "[ESC] MAIN MENU".to_string(),
         };
-        
-        
 
         if self.draw_flat_button(buffer, &btn_resume, mx, my) && clicked || click1 {
             // Simply return to the Playing state without touching the game object to resume seamlessly
@@ -322,8 +319,7 @@ impl Menu {
         window: &mut Window,
         buffer: &mut [u32],
         game: &mut Game,
-        renderer_data: &RendererData,
-        audio: &mut Audio,
+        key_bindings: &KeyBinding,
     ) -> AppState {
         // Clear the buffer from the previous frame
         buffer.fill(COL_BG_MAIN);
@@ -341,8 +337,6 @@ impl Menu {
             6,
             COL_TITLE_RED,
         );
-
-        
 
         let action = [
             "FORWARD",
@@ -363,10 +357,10 @@ impl Menu {
             "BIG_JUMP",
             "CURRENT_ENEMIES",
             "TOGGLE_FINE_AIMING",
+            "ESCAPE",
         ];
-            
 
-        
+        let was_rebinding = self.selected_action.is_some(); // Zustand wird gemerkt
 
         for (i, action) in action.iter().enumerate() {
             let column = i % 2;
@@ -383,11 +377,12 @@ impl Menu {
             if self.draw_flat_button(buffer, &button, mx, my) && clicked {
                 self.selected_action = Some(i)
             }
+        }
+        if was_rebinding {
+            let keys = window.get_keys_pressed(KeyRepeat::No);
 
-            if let Some(i) = self.selected_action {
-                let keys = window.get_keys_pressed(KeyRepeat::No);
-
-                if let Some(key) = keys.first() {
+            if let Some(key) = keys.first() {
+                if let Some(i) = self.selected_action {
                     match i {
                         0 => game.key_bindings.forward = *key,
                         1 => game.key_bindings.backward = *key,
@@ -407,6 +402,7 @@ impl Menu {
                         15 => game.key_bindings.big_jump = *key,
                         16 => game.key_bindings.current_enemies = *key,
                         17 => game.key_bindings.toggle_fine_aiming = *key,
+                        18 => game.key_bindings.escape = *key,
                         _ => {}
                     }
 
@@ -415,6 +411,11 @@ impl Menu {
                     self.selected_action = None;
                 }
             }
+        }
+
+        if !was_rebinding && window.is_key_pressed(game.key_bindings.escape, KeyRepeat::No) {
+            window.set_cursor_visibility(true);
+            return AppState::StartScreen;
         }
 
         AppState::KeyBinding

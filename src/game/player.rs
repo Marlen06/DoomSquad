@@ -292,13 +292,11 @@ impl Player {
 
         if window.is_key_down(key_bindings.forward)
             && ((!self.is_sliding && !self.is_jumping) || self.last_input == W)
-            
         {
             step_successful = self.mover.step(self.move_speed, 0.0, map, self.godmode);
         }
         if window.is_key_down(key_bindings.left)
             && ((!self.is_sliding && !self.is_jumping) || self.last_input == A)
-            
         {
             step_successful = self
                 .mover
@@ -306,7 +304,6 @@ impl Player {
         }
         if window.is_key_down(key_bindings.right)
             && ((!self.is_sliding && !self.is_jumping) || self.last_input == D)
-            
         {
             step_successful = self
                 .mover
@@ -315,7 +312,6 @@ impl Player {
 
         if window.is_key_down(key_bindings.backward)
             && ((!self.is_sliding && !self.is_jumping) || self.last_input == S)
-           
         {
             step_successful = self.mover.step(self.move_speed, PI, map, self.godmode);
         }

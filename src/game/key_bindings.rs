@@ -1,10 +1,5 @@
-
 use minifb::Key;
-use serde:: {Deserialize, Serialize};
-
-
-
-
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize)]
 struct KeyBindingsConfig {
@@ -26,10 +21,8 @@ struct KeyBindingsConfig {
     big_jump: String,
     current_enemies: String,
     toggle_fine_aiming: String,
+    escape: String,
 }
-
-
-
 
 #[derive(Clone)]
 pub struct KeyBinding {
@@ -51,6 +44,7 @@ pub struct KeyBinding {
     pub big_jump: Key,
     pub current_enemies: Key,
     pub toggle_fine_aiming: Key,
+    pub escape: Key,
 }
 
 impl KeyBinding {
@@ -74,6 +68,7 @@ impl KeyBinding {
             big_jump: Key::R,
             current_enemies: Key::L,
             toggle_fine_aiming: Key::E,
+            escape: Key::Escape,
         }
     }
 
@@ -81,23 +76,19 @@ impl KeyBinding {
         let config = std::fs::read_to_string("key_bindings.ron");
 
         match config {
-            Ok(contents) => {
-                match ron::from_str::<KeyBindingsConfig>(&contents) {
-                    Ok(config) => {
-                        match config.to_key_binding() {
-                            Some(bindings) => bindings,
-                            None => Self::new()
-                        }
-                    }
-                    Err(_) => Self::new()
-                }
-            }
-            Err(_) => Self::new()
+            Ok(contents) => match ron::from_str::<KeyBindingsConfig>(&contents) {
+                Ok(config) => match config.to_key_binding() {
+                    Some(bindings) => bindings,
+                    None => Self::new(),
+                },
+                Err(_) => Self::new(),
+            },
+            Err(_) => Self::new(),
         }
     }
 
-    pub fn save(&self) { 
-        let config = KeyBindingsConfig{
+    pub fn save(&self) {
+        let config = KeyBindingsConfig {
             forward: key_to_string(self.forward),
             backward: key_to_string(self.backward),
             sprint: key_to_string(self.sprint),
@@ -116,24 +107,23 @@ impl KeyBinding {
             big_jump: key_to_string(self.big_jump),
             current_enemies: key_to_string(self.current_enemies),
             toggle_fine_aiming: key_to_string(self.toggle_fine_aiming),
-        }; 
+            escape: key_to_string(self.escape),
+        };
 
-        match ron:: ser::to_string_pretty(&config, ron::ser::PrettyConfig::default()) {
+        match ron::ser::to_string_pretty(&config, ron::ser::PrettyConfig::default()) {
             Ok(contents) => {
                 if let Err(error) = std::fs::write("key_bindings.ron", contents) {
                     eprintln!("Fehler bei Speichern der Tasten: {}", error);
-                    
                 }
             }
             Err(error) => {
                 eprintln!("Fehler beim Erstellen der RON-Konfiguration: {}", error)
             }
         }
-        
     }
 }
 
-fn key_to_string(key:Key) -> String {
+fn key_to_string(key: Key) -> String {
     format!("{:?}", key)
 }
 
@@ -202,7 +192,7 @@ fn string_to_key(key: &str) -> Option<Key> {
         "Left" => Some(Key::Left),
         "Right" => Some(Key::Right),
 
-          // Modifier-Tasten
+        // Modifier-Tasten
         "LeftShift" => Some(Key::LeftShift),
         "RightShift" => Some(Key::RightShift),
         "LeftCtrl" => Some(Key::LeftCtrl),
@@ -212,7 +202,7 @@ fn string_to_key(key: &str) -> Option<Key> {
         "LeftSuper" => Some(Key::LeftSuper),
         "RightSuper" => Some(Key::RightSuper),
 
-         // Sonderzeichen
+        // Sonderzeichen
         "Apostrophe" => Some(Key::Apostrophe),
         "Backquote" => Some(Key::Backquote),
         "Backslash" => Some(Key::Backslash),
@@ -229,6 +219,7 @@ fn string_to_key(key: &str) -> Option<Key> {
         "Delete" => Some(Key::Delete),
         "End" => Some(Key::End),
         "Enter" => Some(Key::Enter),
+        "Escape" => Some(Key::Escape),
         "Home" => Some(Key::Home),
         "Insert" => Some(Key::Insert),
         "Menu" => Some(Key::Menu),
@@ -238,7 +229,7 @@ fn string_to_key(key: &str) -> Option<Key> {
         "Space" => Some(Key::Space),
         "Tab" => Some(Key::Tab),
 
-         // Nummernblock
+        // Nummernblock
         "NumPad0" => Some(Key::NumPad0),
         "NumPad1" => Some(Key::NumPad1),
         "NumPad2" => Some(Key::NumPad2),
@@ -256,11 +247,8 @@ fn string_to_key(key: &str) -> Option<Key> {
         "NumPadPlus" => Some(Key::NumPadPlus),
         "NumPadEnter" => Some(Key::NumPadEnter),
 
-
         _ => None,
-
     }
-    
 }
 
 impl KeyBindingsConfig {
@@ -284,9 +272,7 @@ impl KeyBindingsConfig {
             big_jump: string_to_key(&self.big_jump)?,
             current_enemies: string_to_key(&self.current_enemies)?,
             toggle_fine_aiming: string_to_key(&self.toggle_fine_aiming)?,
-
-        } )
-        
+            escape: string_to_key(&self.escape)?,
+        })
     }
-    
 }
