@@ -6,7 +6,6 @@
 
 use font8x8::{BASIC_FONTS, UnicodeFonts};
 use minifb::{Key, KeyRepeat, MouseButton, MouseMode, Window};
-use rand::seq::index;
 use std::fs;
 
 use crate::audio::audio_handler::Audio;
